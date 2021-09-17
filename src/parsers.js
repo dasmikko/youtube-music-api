@@ -178,7 +178,7 @@ exports.parseSongSearchResult = (context) => {
                 return 1 < a.length ? a : 0 < a.length ? a[0] : a
             })(),
             album: (function() {
-                var c = _.first(utils.fv(flexColumn[1], 'runs', true))
+                var c = utils.fv(flexColumn[1], 'runs', true)[2]
                 if (!Array.isArray(c) && c instanceof Object) return {
                     name: utils.fv(c, 'text'),
                     browseId: utils.fv(c, 'browseEndpoint:browseId', true)
@@ -674,7 +674,7 @@ exports.parseAlbumPage = context => {
         context, 'musicResponsiveListItemRenderer'
     )
 
-    albumTracks.forEach((item) => {
+    /*albumTracks.forEach((item) => {
         result.tracks.push({
             name: utils.fv(item, 'flexColumns:0:runs:text'),
             videoId: utils.fv(item, 'videoId')[0],
@@ -684,7 +684,7 @@ exports.parseAlbumPage = context => {
                 .filter(Boolean)
                 .map(({ name }) => name),
         });
-    });
+    });*/
 
     return result
 }
