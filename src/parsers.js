@@ -607,11 +607,7 @@ exports.parseAlbumPage = context => {
         title: '',
         description: '',
         trackCount: 0,
-        date: {
-            year: 0,
-            month: 0,
-            day: 0
-        },
+        releaseYear: 0,
         duration: 0,
         artist: [],
         tracks: [],
@@ -653,7 +649,7 @@ exports.parseAlbumPage = context => {
     result.browseId = serviceTrackingParams.browse_id;
 
     result.trackCount = parseInt(_.get(albumRelease, 'secondSubtitle.runs[0].text').replace(' songs'));
-    // result.date = albumRelease.releaseDate
+    result.releaseYear = parseInt(albumRelease.subtitle.runs[albumRelease.subtitle.runs.length-1].text)
     // result.duration = parseInt(albumRelease.durationMs)
 
     result.playlistId = utils.fv(
