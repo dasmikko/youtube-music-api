@@ -178,7 +178,19 @@ exports.parseSongSearchResult = (context) => {
                 return 1 < a.length ? a : 0 < a.length ? a[0] : a
             })(),
             album: (function() {
-                var c = utils.fv(flexColumn[1], 'runs', true)[2]
+                // Find the column where the browse id starts with MPREb_
+                let c = utils.fv(flexColumn[1], 'runs', true).filter(o => {
+                    // Skip the dividers
+                    if(o.hasOwnProperty('navigationEndpoint')) {
+                        if (o.navigationEndpoint.hasOwnProperty('browseEndpoint')) {
+                            const browseId = o.navigationEndpoint.browseEndpoint.browseId
+                            if (browseId.includes('MPREb_')) {
+                                return o
+                            }
+                        }
+                    }
+                })[0] // There should only be one, so take the first
+
                 if (!Array.isArray(c) && c instanceof Object) return {
                     name: utils.fv(c, 'text'),
                     browseId: utils.fv(c, 'browseEndpoint:browseId', true)
